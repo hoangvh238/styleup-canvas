@@ -14,7 +14,7 @@ interface ShapeSidebarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
 export const ShapeSidebar = ({
   editor,
@@ -29,19 +29,16 @@ export const ShapeSidebar = ({
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "shapes" ? "visible" : "hidden",
+        activeTool === "shapes" ? "visible" : "hidden"
       )}
     >
       <ToolSidebarHeader
-        title="Shapes"
-        description="Add shapes to your canvas"
+        title="Hình dạng"
+        description="Thêm hình dạng vào áo"
       />
       <ScrollArea>
         <div className="grid grid-cols-3 gap-4 p-4">
-          <ShapeTool
-            onClick={() => editor?.addCircle()}
-            icon={FaCircle}
-          />
+          <ShapeTool onClick={() => editor?.addCircle()} icon={FaCircle} />
           <ShapeTool
             onClick={() => editor?.addSoftRectangle()}
             icon={FaSquare}
@@ -50,19 +47,13 @@ export const ShapeSidebar = ({
             onClick={() => editor?.addRectangle()}
             icon={FaSquareFull}
           />
-          <ShapeTool
-            onClick={() => editor?.addTriangle()}
-            icon={IoTriangle}
-          />
+          <ShapeTool onClick={() => editor?.addTriangle()} icon={IoTriangle} />
           <ShapeTool
             onClick={() => editor?.addInverseTriangle()}
             icon={IoTriangle}
             iconClassName="rotate-180"
           />
-          <ShapeTool
-            onClick={() => editor?.addDiamond()}
-            icon={FaDiamond}
-          />
+          <ShapeTool onClick={() => editor?.addDiamond()} icon={FaDiamond} />
         </div>
       </ScrollArea>
       <ToolSidebarClose onClick={onClose} />

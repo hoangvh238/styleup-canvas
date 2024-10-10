@@ -4,13 +4,13 @@ import { CiFileOn } from "react-icons/ci";
 import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import { useFilePicker } from "use-file-picker";
 import { useMutationState } from "@tanstack/react-query";
-import { 
-  ChevronDown, 
-  Download, 
-  Loader, 
-  MousePointerClick, 
-  Redo2, 
-  Undo2
+import {
+  ChevronDown,
+  Download,
+  Loader,
+  MousePointerClick,
+  Redo2,
+  Undo2,
 } from "lucide-react";
 
 import { UserButton } from "@/features/auth/components/user-button";
@@ -34,7 +34,7 @@ interface NavbarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
 export const Navbar = ({
   id,
@@ -73,7 +73,7 @@ export const Navbar = ({
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
       <div className="w-full flex items-center gap-x-1 h-full">
-        <DropdownMenu modal={false}>
+        {/* <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="sm" variant="ghost">
               File
@@ -94,8 +94,8 @@ export const Navbar = ({
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
-        <Separator orientation="vertical" className="mx-2" />
+        </DropdownMenu> */}
+        {/* <Separator orientation="vertical" className="mx-2" /> */}
         <Hint label="Select" side="bottom" sideOffset={10}>
           <Button
             variant="ghost"
@@ -127,35 +127,29 @@ export const Navbar = ({
           </Button>
         </Hint>
         <Separator orientation="vertical" className="mx-2" />
-        {isPending && ( 
+        {/* {isPending && (
           <div className="flex items-center gap-x-2">
             <Loader className="size-4 animate-spin text-muted-foreground" />
-            <div className="text-xs text-muted-foreground">
-              Saving...
-            </div>
+            <div className="text-xs text-muted-foreground">Saving...</div>
           </div>
         )}
-        {!isPending && isError && ( 
+        {!isPending && isError && (
           <div className="flex items-center gap-x-2">
             <BsCloudSlash className="size-[20px] text-muted-foreground" />
-            <div className="text-xs text-muted-foreground">
-              Failed to save
-            </div>
+            <div className="text-xs text-muted-foreground">Failed to save</div>
           </div>
         )}
-        {!isPending && !isError && ( 
+        {!isPending && !isError && (
           <div className="flex items-center gap-x-2">
             <BsCloudCheck className="size-[20px] text-muted-foreground" />
-            <div className="text-xs text-muted-foreground">
-              Saved
-            </div>
+            <div className="text-xs text-muted-foreground">Saved</div>
           </div>
-        )}
+        )} */}
         <div className="ml-auto flex items-center gap-x-4">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="ghost">
-                Export
+                Xuất
                 <Download className="size-4 ml-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -168,7 +162,7 @@ export const Navbar = ({
                 <div>
                   <p>JSON</p>
                   <p className="text-xs text-muted-foreground">
-                    Save for later editing
+                    Lưu cho việc chỉnh sửa sau này
                   </p>
                 </div>
               </DropdownMenuItem>
@@ -180,7 +174,7 @@ export const Navbar = ({
                 <div>
                   <p>PNG</p>
                   <p className="text-xs text-muted-foreground">
-                    Best for sharing on the web
+                    Tốt nhất để chia sẻ trên web
                   </p>
                 </div>
               </DropdownMenuItem>
@@ -192,7 +186,7 @@ export const Navbar = ({
                 <div>
                   <p>JPG</p>
                   <p className="text-xs text-muted-foreground">
-                    Best for printing
+                    Tốt nhất để in ấn
                   </p>
                 </div>
               </DropdownMenuItem>
@@ -204,7 +198,7 @@ export const Navbar = ({
                 <div>
                   <p>SVG</p>
                   <p className="text-xs text-muted-foreground">
-                    Best for editing in vector software
+                    Tốt nhất để chỉnh sửa trong phần mềm vector
                   </p>
                 </div>
               </DropdownMenuItem>

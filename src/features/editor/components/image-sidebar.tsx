@@ -2,10 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AlertTriangle, Loader, Upload } from "lucide-react";
 
-import { 
-  ActiveTool, 
-  Editor,
-} from "@/features/editor/types";
+import { ActiveTool, Editor } from "@/features/editor/types";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
 
@@ -19,7 +16,7 @@ interface ImageSidebarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
 export const ImageSidebar = ({
   editor,
@@ -36,21 +33,18 @@ export const ImageSidebar = ({
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "images" ? "visible" : "hidden",
+        activeTool === "images" ? "visible" : "hidden"
       )}
     >
-      <ToolSidebarHeader
-        title="Images"
-        description="Add images to your canvas"
-      />
+      <ToolSidebarHeader title="Hình ảnh" description="Thêm hình ảnh vào áo" />
       <div className="p-4 border-b">
         <UploadButton
           appearance={{
             button: "w-full text-sm font-medium",
-            allowedContent: "hidden"
+            allowedContent: "hidden",
           }}
           content={{
-            button: "Upload Image"
+            button: "Tải lên hình ảnh",
           }}
           endpoint="imageUploader"
           onClientUploadComplete={(res) => {
@@ -74,29 +68,30 @@ export const ImageSidebar = ({
       <ScrollArea>
         <div className="p-4">
           <div className="grid grid-cols-2 gap-4">
-            {data && data.map((image) => {
-              return (
-                <button
-                  onClick={() => editor?.addImage(image.urls.regular)}
-                  key={image.id}
-                  className="relative w-full h-[100px] group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
-                >
-                  <Image
-                    fill
-                    src={image.urls.small}
-                    alt={image.alt_description || "Image"}
-                    className="object-cover"
-                  />
-                  <Link
-                    target="_blank"
-                    href={image.links.html}
-                    className="opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50 text-left"
+            {data &&
+              data.map((image) => {
+                return (
+                  <button
+                    onClick={() => editor?.addImage(image.urls.regular)}
+                    key={image.id}
+                    className="relative w-full h-[100px] group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
                   >
-                    {image.user.name}
-                  </Link>
-                </button>
-              )
-            })}
+                    <Image
+                      fill
+                      src={image.urls.small}
+                      alt={image.alt_description || "Image"}
+                      className="object-cover"
+                    />
+                    <Link
+                      target="_blank"
+                      href={image.links.html}
+                      className="opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50 text-left"
+                    >
+                      {image.user.name}
+                    </Link>
+                  </button>
+                );
+              })}
           </div>
         </div>
       </ScrollArea>

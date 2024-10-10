@@ -72,8 +72,8 @@ const buildEditor = ({
   const savePng = () => {
     const options = generateSaveOptions();
 
+    // canvas.setViewportTransform([0, 0, 0, 0, 0, 0]);
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-    // canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
     const dataUrl = canvas.toDataURL(options);
 
     downloadFile(dataUrl, "png");
@@ -742,9 +742,10 @@ export const useEditor = ({
         fill: "white",
         selectable: false,
         hasControls: false,
-        strokeWidth: 10,
-        stroke: "#000000",
-        strokeDashArray: [50, 20],
+        shadow: "0 0 1px rgba(0, 0, 0, 1)",
+        // strokeWidth: 10,
+        // stroke: "#000000",
+        // strokeDashArray: [50, 20],
       });
 
       initialCanvas.setWidth(initialContainer.offsetWidth);

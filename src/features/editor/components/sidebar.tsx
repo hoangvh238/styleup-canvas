@@ -1,6 +1,6 @@
 "use client";
 
-import { 
+import {
   LayoutTemplate,
   ImageIcon,
   Pencil,
@@ -16,57 +16,54 @@ import { SidebarItem } from "@/features/editor/components/sidebar-item";
 interface SidebarProps {
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
-export const Sidebar = ({
-  activeTool,
-  onChangeActiveTool,
-}: SidebarProps) => {
+export const Sidebar = ({ activeTool, onChangeActiveTool }: SidebarProps) => {
   return (
     <aside className="bg-white flex flex-col w-[100px] h-full border-r overflow-y-auto">
       <ul className="flex flex-col">
         <SidebarItem
           icon={LayoutTemplate}
-          label="Design"
+          label="Mẫu sẵn có"
           isActive={activeTool === "templates"}
           onClick={() => onChangeActiveTool("templates")}
         />
         <SidebarItem
           icon={ImageIcon}
-          label="Image"
+          label="Hình ảnh"
           isActive={activeTool === "images"}
           onClick={() => onChangeActiveTool("images")}
         />
         <SidebarItem
           icon={Type}
-          label="Text"
+          label="Chữ viết"
           isActive={activeTool === "text"}
           onClick={() => onChangeActiveTool("text")}
         />
         <SidebarItem
           icon={Shapes}
-          label="Shapes"
+          label="Hình dạng"
           isActive={activeTool === "shapes"}
           onClick={() => onChangeActiveTool("shapes")}
         />
         <SidebarItem
           icon={Pencil}
-          label="Draw"
+          label="Vẽ tự do"
           isActive={activeTool === "draw"}
           onClick={() => onChangeActiveTool("draw")}
         />
-        <SidebarItem
+        {/* <SidebarItem
           icon={Sparkles}
           label="AI"
           isActive={activeTool === "ai"}
           onClick={() => onChangeActiveTool("ai")}
-        />
-        <SidebarItem
+        /> */}
+        {/* <SidebarItem
           icon={Settings}
           label="Settings"
           isActive={activeTool === "settings"}
           onClick={() => onChangeActiveTool("settings")}
-        />
+        /> */}
       </ul>
     </aside>
   );

@@ -1,7 +1,4 @@
-import { 
-  ActiveTool, 
-  Editor, 
-} from "@/features/editor/types";
+import { ActiveTool, Editor } from "@/features/editor/types";
 import { ToolSidebarClose } from "@/features/editor/components/tool-sidebar-close";
 import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-header";
 
@@ -13,7 +10,7 @@ interface TextSidebarProps {
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
 export const TextSidebar = ({
   editor,
@@ -28,56 +25,52 @@ export const TextSidebar = ({
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "text" ? "visible" : "hidden",
+        activeTool === "text" ? "visible" : "hidden"
       )}
     >
-      <ToolSidebarHeader
-        title="Text"
-        description="Add text to your canvas"
-      />
+      <ToolSidebarHeader title="Chữ viết" description="Thêm chữ vào áo" />
       <ScrollArea>
         <div className="p-4 space-y-4 border-b">
+          {/* <Button className="w-full" onClick={() => editor?.addText("Textbox")}>
+            Thêm chữ
+          </Button> */}
           <Button
-            className="w-full"
-            onClick={() => editor?.addText("Textbox")}
+            className="w-full h-16"
+            variant="secondary"
+            size="lg"
+            onClick={() =>
+              editor?.addText("Chữ lớn", {
+                fontSize: 80,
+                fontWeight: 700,
+              })
+            }
           >
-            Add a textbox
+            <span className="text-3xl font-bold">Thêm chữ lớn</span>
           </Button>
           <Button
             className="w-full h-16"
             variant="secondary"
             size="lg"
-            onClick={() => editor?.addText("Heading", {
-              fontSize: 80,
-              fontWeight: 700,
-            })}
+            onClick={() =>
+              editor?.addText("Chữ vừa", {
+                fontSize: 44,
+                fontWeight: 600,
+              })
+            }
           >
-            <span className="text-3xl font-bold">
-              Add a heading
-            </span>
+            <span className="text-xl font-semibold">Thêm chữ vừa</span>
           </Button>
           <Button
             className="w-full h-16"
             variant="secondary"
             size="lg"
-            onClick={() => editor?.addText("Subheading", {
-              fontSize: 44,
-              fontWeight: 600,
-            })}
+            onClick={() =>
+              editor?.addText("Chữ nhỏ", {
+                fontSize: 32,
+              })
+            }
           >
-            <span className="text-xl font-semibold">
-              Add a subheading
-            </span>
-          </Button>
-          <Button
-            className="w-full h-16"
-            variant="secondary"
-            size="lg"
-            onClick={() => editor?.addText("Paragraph", {
-              fontSize: 32,
-            })}
-          >
-            Paragraph
+            Thêm chữ nhỏ
           </Button>
         </div>
       </ScrollArea>
