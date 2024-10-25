@@ -35,6 +35,60 @@ const app = new Hono()
       return c.json({ data });
     },
   )
+  .post(
+    "/projects",
+    verifyAuth(),
+    zValidator(
+      "query",
+      z.object({
+        page: z.coerce.number(),
+        limit: z.coerce.number(),
+      }),
+    ),
+    async (c) => {
+      const { page, limit } = c.req.valid("query");
+
+      const data = await db
+        .select()
+        .from(projects)
+        .where(eq(projects.isTemplate, true))
+        .limit(limit)
+        .offset((page -1) * limit)
+        .orderBy(
+          asc(projects.isPro),
+          desc(projects.updatedAt),
+        );
+
+      return c.json({ data });
+    },
+  )
+  .get(
+    "/projects",
+    verifyAuth(),
+    zValidator(
+      "query",
+      z.object({
+        page: z.coerce.number(),
+        limit: z.coerce.number(),
+      }),
+    ),
+    async (c) => {
+      const { page, limit } = c.req.valid("query");
+
+      const data = await db
+        .select()
+        .from(projects)
+        .where(eq(projects.isTemplate, true))
+        .limit(limit)
+        .offset((page -1) * limit)
+        .orderBy(
+          asc(projects.isPro),
+          desc(projects.updatedAt),
+        );
+
+      return c.json({ data });
+    },
+  )
   .delete(
     "/:id",
     verifyAuth(),

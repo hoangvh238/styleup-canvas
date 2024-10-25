@@ -29,6 +29,7 @@ const routes = app
   .route("/users", users)
   .route("/images", images)
   .route("/TemplateCanvas", template)
+  .route("/projects", template)
   .route("/subscriptions", subscriptions);
 
 export const GET = handle(app);
