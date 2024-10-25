@@ -62,7 +62,7 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
     <Editor
       initialData={{
         name: "Untitled project",
-        json: data?.content,
+        json: data?.content ?? "{}",
         width: 720,
         height: 900,
         id: params.projectId,
