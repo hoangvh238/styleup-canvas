@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { TriangleAlert } from "lucide-react";
@@ -39,8 +39,15 @@ export const SignInCard = () => {
     });
   };
 
-  const onProviderSignIn = (provider: "github" | "google") => {
-    signIn(provider, { callbackUrl: "/" });
+  const onProviderSignIn = async (provider: "github" | "google") => {
+    try {
+
+        const res = await signIn(provider, { callbackUrl: "/" });
+        console.log('first', res)
+    } catch (err) {
+
+      console.log('res', err)
+    }
   };
 
   return (

@@ -28,23 +28,29 @@ import { TemplateSidebar } from "@/features/editor/components/template-sidebar";
 import { RemoveBgSidebar } from "@/features/editor/components/remove-bg-sidebar";
 import { SettingsSidebar } from "@/features/editor/components/settings-sidebar";
 import Image from "next/image";
+import { useSaveTemplate } from "@/features/projects/api/use-save-template";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAddCard } from "@/features/projects/api/use-add-cart";
 
 interface EditorProps {
   initialData: ResponseType["data"];
+  product: any
 }
 
-export const Editor = ({ initialData }: EditorProps) => {
+export const Editor = ({ initialData, product }: EditorProps) => {
   const { mutate } = useUpdateProject(initialData.id);
-
+  const router = useRouter();
+  const params = useSearchParams();
+  const { mutate: AddCart } = useAddCard();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSave = useCallback(
-    debounce((values: { json: string; height: number; width: number }) => {
-      mutate(values);
-    }, 500),
-    [mutate]
-  );
 
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
+
+  useEffect(() => {
+    if (initialData?.json !== "{}") {
+      editor?.loadJson(initialData?.json);
+    }
+  }, [initialData]);
 
   const onClearSelection = useCallback(() => {
     if (selectionDependentTools.includes(activeTool)) {
@@ -57,7 +63,6 @@ export const Editor = ({ initialData }: EditorProps) => {
     defaultWidth: initialData.width,
     defaultHeight: initialData.height,
     clearSelectionCallback: onClearSelection,
-    saveCallback: debouncedSave,
   });
 
   const onChangeActiveTool = useCallback(
@@ -111,6 +116,28 @@ export const Editor = ({ initialData }: EditorProps) => {
       canvas.dispose();
     };
   }, [init]);
+
+  const { mutate: CreateNewTemplate } = useSaveTemplate();
+
+  const handleSaveDesign = () => {
+    CreateNewTemplate({
+      ...product,
+      content: editor?.getJson(),
+    })
+  }
+  const handleBuy = () => {
+    const size = params.get("size") ?? "XL";
+    CreateNewTemplate({
+      ...product,
+      content: editor?.getJson(),
+    })
+    AddCart({
+      customCanvasId: initialData?.id,
+      quantity: 1,
+      size: size,
+    });
+    router.push(`http://localhost:3000/checkout?itemProduct=${initialData?.id}&size=${size}`);
+  }
 
   return (
     <div className="h-full flex flex-col">
@@ -215,7 +242,10 @@ export const Editor = ({ initialData }: EditorProps) => {
             />
             <canvas ref={canvasRef} className="relative z-40 w-full" />
           </div>
-          <Footer editor={editor} />
+          <Footer editor={editor}
+            initialData={initialData}
+            handleSaveDesign={handleSaveDesign}
+            handleBuy={handleBuy} />
         </main>
       </div>
     </div>

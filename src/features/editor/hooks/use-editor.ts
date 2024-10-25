@@ -75,7 +75,6 @@ const buildEditor = ({
     // canvas.setViewportTransform([0, 0, 0, 0, 0, 0]);
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
     const dataUrl = canvas.toDataURL(options);
-
     downloadFile(dataUrl, "png");
     autoZoom();
   };
@@ -108,6 +107,14 @@ const buildEditor = ({
       JSON.stringify(dataUrl, null, "\t")
     )}`;
     downloadFile(fileString, "json");
+  };
+
+  const getJson = () => {
+    const dataUrl = canvas.toJSON(JSON_KEYS);
+
+    transformText(dataUrl.objects);
+    const fileString = JSON.stringify(dataUrl, null, "\t")
+    return fileString;
   };
 
   const loadJson = (json: string) => {
@@ -143,6 +150,7 @@ const buildEditor = ({
     saveJpg,
     saveSvg,
     saveJson,
+    getJson,
     loadJson,
     canUndo,
     canRedo,
@@ -208,17 +216,17 @@ const buildEditor = ({
       });
     },
     addImage: (value: string) => {
-      console.log("Adding image", value);
 
       fabric.Image.fromURL(
         value,
         (image) => {
           const workspace = getWorkspace();
-
+          console.log('first', workspace)
           image.scaleToWidth(workspace?.width || 0);
           image.scaleToHeight(workspace?.height || 0);
 
           addToCanvas(image);
+          autoZoom();
         },
         {
           crossOrigin: "anonymous",

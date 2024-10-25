@@ -7,6 +7,10 @@ import { useGetProject } from "@/features/projects/api/use-get-project";
 
 import { Editor } from "@/features/editor/components/editor";
 import { Button } from "@/components/ui/button";
+import { useGetTemplates } from "@/features/projects/api/use-get-templates";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import webStorageClient from "@/utils/webStorageClient";
 
 interface EditorProjectIdPageProps {
   params: {
@@ -15,7 +19,21 @@ interface EditorProjectIdPageProps {
 }
 
 const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
-  const { data, isLoading, isError } = useGetProject(params.projectId);
+  const { data, isLoading, isError } = useGetTemplates({
+    id: params.projectId
+  });
+
+  const router = useRouter();
+  const param = useSearchParams();
+  useEffect(() => {
+    if (param.has("token")) {
+      const token = param.get("token") ?? "";
+      const size = param.get("size");
+      webStorageClient.setToken(token, {});
+      router.push(`/editor/${params.projectId}?size=${size}`)
+      router.refresh();
+    }
+  }, [params.projectId, param, router])
 
   // if (isLoading || !data) {
   //   return (
@@ -40,15 +58,14 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
   //     </div>
   //   );
   // }
-
   return (
     <Editor
       initialData={{
         name: "Untitled project",
-        json: "",
+        json: data?.content,
         width: 720,
         height: 900,
-        id: "",
+        id: params.projectId,
         userId: "",
         thumbnailUrl: null,
         isTemplate: false,
@@ -56,6 +73,7 @@ const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
         createdAt: "",
         updatedAt: "",
       }}
+      product={data}
     />
   );
 };

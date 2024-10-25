@@ -9,7 +9,7 @@ import { ToolSidebarHeader } from "@/features/editor/components/tool-sidebar-hea
 
 import {
   ResponseType,
-  useGetTemplates,
+  useGetAllTemplates,
 } from "@/features/projects/api/use-get-templates";
 
 import { cn } from "@/lib/utils";
@@ -35,9 +35,13 @@ export const TemplateSidebar = ({
     "You are about to replace the current project with this template."
   );
 
-  const { data, isLoading, isError } = useGetTemplates({
-    limit: "20",
-    page: "1",
+  const { data, isLoading, isError } = useGetAllTemplates({
+    filter: "",
+    skip: 0,
+    pageIndex: 0,
+    pageSize: 20,
+    sortField: "name",
+    asc: true
   });
 
   const onClose = () => {
@@ -53,9 +57,12 @@ export const TemplateSidebar = ({
     // const ok = await confirm();
 
     // if (ok) {
-    editor?.loadJson(template.json);
+    console.log('first', template)
+
+    editor?.loadJson(template?.content);
     // }
   };
+
 
   return (
     <aside
@@ -83,11 +90,11 @@ export const TemplateSidebar = ({
       <ScrollArea>
         <div className="p-4">
           <div className="grid grid-cols-2 gap-4">
-            {TEMPLATES.map((template) => (
+            {data?.result?.items?.map((template: any) => (
               <button key={template?.id} onClick={() => onClick(template)}>
                 <Image
                   alt="template"
-                  src={template.image}
+                  src={template.images[0]}
                   width={400}
                   height={200}
                 />
