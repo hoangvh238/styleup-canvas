@@ -136,7 +136,7 @@ export const Editor = ({ initialData, product }: EditorProps) => {
       quantity: 1,
       size: size,
     });
-    router.push(`http://localhost:3000/checkout?itemProduct=${initialData?.id}&size=${size}`);
+    router.push(`https://shop-fe-black.vercel.app/checkout?itemProduct=${initialData?.id}&size=${size}`);
   }
 
   return (
